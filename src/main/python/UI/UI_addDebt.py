@@ -13,15 +13,19 @@ class Wrapper_AddDebt(QtWidgets.QWidget):
         self.field2_label = QtWidgets.QLabel('User 2',self)
         self.field1_edit = DropDown_Users(self)
         self.field2_edit = DropDown_Users(self)
+        self.amount_label = QtWidgets.QLabel('Amount:',self)
+        self.amount_edit = QtWidgets.QLineEdit(self)
         self.direction_button = ButtonWidget_Direction(self)
-        self.add_button = ButtonWidget_AddDebt(self.field1_edit,self.field2_edit,self)
+        self.add_button = ButtonWidget_AddDebt(self.field1_edit,self.field2_edit,self.amount_edit,self)
         self.direction_button.addListener(self.add_button)
         self.layout.addWidget(self.field1_label,0,0)
         self.layout.addWidget(self.field1_edit,1,0)
         self.layout.addWidget(self.field2_label,0,2)
         self.layout.addWidget(self.field2_edit,1,2)
         self.layout.addWidget(self.direction_button,1,1)
-        self.layout.addWidget(self.add_button,2,1)
+        self.layout.addWidget(self.amount_label,2,0)
+        self.layout.addWidget(self.amount_edit,2,1)
+        self.layout.addWidget(self.add_button,2,2)
 
 #TODO Now storing user objects, rewrite to store pointers to objects/id's
 class DropDown_Users(QtWidgets.QComboBox):
@@ -62,23 +66,25 @@ class ButtonWidget_Direction(QtWidgets.QPushButton):
             listener.setDirection(self.pointingRight)
 
 class ButtonWidget_AddDebt(QtWidgets.QPushButton):
-    def __init__(self, dd1: QtWidgets.QComboBox, dd2: 'DropDown_Users', parent = None):
+    def __init__(self, 
+    dd1: QtWidgets.QComboBox, dd2: QtWidgets.QComboBox, 
+    amount_field: QtWidgets.QLineEdit, parent = None):
         super().__init__(parent)
         self.setText('Add Debt')
         self.dd1 = dd1
         self.dd2 = dd2
+        self.amount_field = amount_field
         self.direction = None
         self.clicked.connect(lambda: self._addDebt())
 
     def setDirection(self, direction: bool):
         self.direction = direction
-        print(direction)
 
+    #Add check for invalid input in amount
     def _addDebt(self):
-        print(self.dd1.currentData())
-        if self.direction:
-            debt_controller.addDebt(self.dd1.currentData(),self.dd2.currentData(),20)
+        if self.direction or self.direction is None:
+            debt_controller.addDebt(self.dd1.currentData(),self.dd2.currentData(),float(self.amount_field.text()))
         else:
-            debt_controller.addDebt(self.dd2.currentData(),self.dd1.currentData(),20)
+            debt_controller.addDebt(self.dd2.currentData(),self.dd1.currentData(),float(self.amount_field.text()))
         
 

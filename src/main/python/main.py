@@ -7,8 +7,6 @@ from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtWidgets import QMainWindow
 from UI.UI_WhoToPay import ControllerMainWindow
 
-
-
 if __name__ == '__main__':
     appctxt = ApplicationContext()
     MainWindow = ControllerMainWindow()

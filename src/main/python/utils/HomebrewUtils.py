@@ -150,7 +150,6 @@ def children_combination_with_sum_k(children: {}, sum_k: int, r: int = 3):
             if sum(temp_list) == sum_k:
                 return list(comb) #Because we only need a single combination
                 r_list.append(list(comb)) #shhh...
-
     return(r_list)
 
 
@@ -168,10 +167,8 @@ def k_combinations(arr:[], k:int):
                     r_list.append(temp_list)
                     temp_list = [arr[i]]
         else:
-            r_list.append(temp_list)        
-                
+            r_list.append(temp_list)               
     return r_list
-
  
 if __name__ == "__main__":
     pass

@@ -25,7 +25,7 @@ class ListWidget_Users(QtWidgets.QListWidget):
     #Should show user specific info
     def _OpenPopup(self):
         print('Opening User Information Popup!')
-        self.popup = Popup_InformationUser()
+        self.popup = Popup_InformationUser(self.users[self.currentIndex().row()])
         self.popup.setGeometry(QtCore.QRect(100,100,400,200))
         self.popup.show()
     
@@ -36,14 +36,24 @@ class ListWidget_Users(QtWidgets.QListWidget):
         for k,user in enumerate(users):
             self.users[k] = user
             self.insertItem(k,user['name'])
-
 #Maybe better to use a stacked widget for editing/updating user information
 class Popup_InformationUser(QtWidgets.QWidget):
-    def __init__(self, parent = None):
+    def __init__(self, user: {}, parent = None):
         super().__init__(parent)
         self.layout = QtWidgets.QVBoxLayout(self)
-        self.name_label = QtWidgets.QLabel('Name', self)
+        self.name_label = QtWidgets.QLabel('Name:', self)
+        self.name_info = QtWidgets.QLabel(user['name'], self)
+        self.phone_label = QtWidgets.QLabel('Phone Number:', self)
+        self.phone_info = QtWidgets.QLabel(user['phone_nr'], self)
+        self.account_label = QtWidgets.QLabel('Account Number:', self)
+        self.account_info = QtWidgets.QLabel(user['account_nr'], self)
+
         self.layout.addWidget(self.name_label)
+        self.layout.addWidget(self.name_info)
+        self.layout.addWidget(self.phone_label)
+        self.layout.addWidget(self.phone_info)
+        self.layout.addWidget(self.account_label)
+        self.layout.addWidget(self.account_info)
 
 class Popup_NewUser(QtWidgets.QWidget):
     def __init__(self, parent = None):

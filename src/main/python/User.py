@@ -1,4 +1,3 @@
-
 class User():
     def __init__(self, name: str, phone_nr: str = None, acc_nr: str = None):
         super().__init__()

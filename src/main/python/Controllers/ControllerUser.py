@@ -53,6 +53,7 @@ class _ControllerUser(metaclass=Singleton):
     def _notifyListeners(self):
         for listener in self.listeners:
             listener.update()
+            
 #Exported instance
 User_Controller = _ControllerUser()
 
